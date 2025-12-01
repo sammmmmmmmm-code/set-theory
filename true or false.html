@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>True or False Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>True or False Game</h1>
+<div class="game-container">
+  <div class="score-timer">
+    <div>Score: <span id="score">0</span></div>
+    <div>Time: <span id="timer">30</span>s</div>
+  </div>
+  <div class="question" id="question"></div>
+  <button id="trueBtn" class="tf-btn">TRUE</button>
+  <button id="falseBtn" class="tf-btn">FALSE</button>
+  <div class="feedback" id="feedback"></div>
+  <button onclick="location.href='modes.html'" class="btn">Back to Modes</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+const tfQuestions = [
+  {question:"A set contains distinct elements.", answer:true},
+  {question:"Intersection combines all elements from both sets.", answer:false}
+];
+let currentTF = 0;
+const questionEl = document.getElementById("question");
+const feedbackEl = document.getElementById("feedback");
+const scoreEl = document.getElementById("score");
+const timerEl = document.getElementById("timer");
+const trueBtn = document.getElementById("trueBtn");
+const falseBtn = document.getElementById("falseBtn");
+
+function showTFQuestion(){
+  feedbackEl.textContent="";
+  questionEl.textContent=tfQuestions[currentTF].question;
+  startTimer(30, timerEl, ()=>alert("Time's up! Score: "+score));
+}
+
+trueBtn.onclick = ()=>{ playClickSound(); checkTFAnswer(true, tfQuestions[currentTF].answer, scoreEl, feedbackEl); nextTF(); }
+falseBtn.onclick = ()=>{ playClickSound(); checkTFAnswer(false, tfQuestions[currentTF].answer, scoreEl, feedbackEl); nextTF(); }
+
+function nextTF(){
+  currentTF++;
+  if(currentTF<tfQuestions.length){ setTimeout(showTFQuestion,800); }
+  else { setTimeout(()=>alert("Game Over! Score: "+score),800); }
+}
+
+resetScore(scoreEl);
+showTFQuestion();
+</script>
+</body>
+</html>

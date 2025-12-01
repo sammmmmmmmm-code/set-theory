@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiple Choice Game</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Multiple Choice Game</h1>
+  <div class="game-container">
+    <div class="score-timer">
+      <div>Score: <span id="score">0</span></div>
+      <div>Time: <span id="timer">60</span>s</div>
+    </div>
+    <div class="question" id="question"></div>
+    <div class="choices" id="choices"></div>
+    <div class="feedback" id="feedback"></div>
+    <button onclick="location.href='modes.html'" class="btn">Back to Modes</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    const mcQuestions = [
+      {question: "What is a set?", choices:["A group of elements","A single element","A number"], answer: 0},
+      {question: "Union of sets combines all elements?", choices:["Yes","No"], answer: 0}
+    ];
+
+    let currentMC = 0;
+    const questionEl = document.getElementById("question");
+    const choicesEl = document.getElementById("choices");
+    const feedbackEl = document.getElementById("feedback");
+    const scoreEl = document.getElementById("score");
+    const timerEl = document.getElementById("timer");
+
+    function showMCQuestion() {
+      feedbackEl.textContent = "";
+      const q = mcQuestions[currentMC];
+      questionEl.textContent = q.question;
+      choicesEl.innerHTML = "";
+      q.choices.forEach((choice, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = choice;
+        btn.className = "choice-btn";
+        btn.onclick = () => {
+          playClickSound();
+          checkMCAnswer(idx, q.answer, scoreEl, feedbackEl);
+          currentMC++;
+          if(currentMC < mcQuestions.length){
+            setTimeout(showMCQuestion, 800);
+          } else {
+            setTimeout(()=>alert("Game Over! Score: "+score), 800);
+          }
+        };
+        choicesEl.appendChild(btn);
+      });
+      startTimer(60, timerEl, ()=>alert("Time's up! Score: "+score));
+    }
+
+    resetScore(scoreEl);
+    showMCQuestion();
+  </script>
+</body>
+</html>

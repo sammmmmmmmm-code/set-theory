@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardinality Challenge</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Cardinality Challenge</h1>
+<div class="game-container">
+  <div class="score-timer">
+    <div>Score: <span id="score">0</span></div>
+    <div>Time: <span id="timer">30</span>s</div>
+  </div>
+  <div class="set-elements" id="setElements"></div>
+  <input type="number" id="answer" placeholder="Count">
+  <div class="feedback" id="feedback"></div>
+  <button id="submitBtn" class="btn">Submit</button>
+  <button onclick="location.href='modes.html'" class="btn">Back to Modes</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+let difficulty=3;
+const setEl = document.getElementById("setElements");
+const feedbackEl = document.getElementById("feedback");
+const scoreEl = document.getElementById("score");
+const timerEl = document.getElementById("timer");
+const answerInput = document.getElementById("answer");
+const submitBtn = document.getElementById("submitBtn");
+
+function generateSet(){
+  setEl.innerHTML="";
+  for(let i=0;i<difficulty;i++){
+    const div=document.createElement("div");
+    div.className="element";
+    div.textContent=i+1;
+    setEl.appendChild(div);
+  }
+  answerInput.value="";
+  feedbackEl.textContent="";
+  startTimer(30,timerEl,()=>feedbackEl.textContent="Time's up!");
+}
+
+submitBtn.onclick = ()=>{
+  playClickSound();
+  const correct = checkCardinality(answerInput.value, difficulty, scoreEl, feedbackEl);
+  if(correct) difficulty++;
+  generateSet();
+}
+
+resetScore(scoreEl);
+generateSet();
+</script>
+</body>
+</html>

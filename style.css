@@ -1,0 +1,291 @@
+/* ==========================
+   GLOBAL STYLES
+========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #0f0f0f;
+    color: white;
+}
+
+/* ==========================
+   NAVIGATION
+========================== */
+nav {
+    width: 100%;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #121212;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+nav h1 {
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+nav ul li a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+    color: #ff4fa7;
+}
+
+/* ==========================
+   HERO SECTION
+========================== */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-size: 50px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 15px;
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.btn-pink {
+    background: #ff4fa7;
+    color: white;
+}
+
+.btn-pink:hover {
+    background: #ff77be;
+}
+
+.btn-outline {
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: black;
+}
+
+/* ==========================
+   GAME CONTAINER COMMON
+========================== */
+.game-container {
+    background-color: #1c1c1c;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+    margin-top: 120px;
+}
+
+.score-timer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.feedback {
+    font-size: 1em;
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+/* ==========================
+   MULTIPLE CHOICE GAME (BLUE)
+========================== */
+.mc-question {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.mc-choices .choice-btn {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background-color: #004085;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mc-choices .choice-btn:hover {
+    background-color: #002752;
+}
+
+/* ==========================
+   SET MATCHING GAME (GREEN)
+========================== */
+.set-box {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    justify-content: center;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    border: 2px dashed #155724;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #155724;
+}
+
+.element {
+    padding: 8px 12px;
+    margin: 5px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px;
+    cursor: grab;
+    display: inline-block;
+}
+
+/* ==========================
+   VENN DIAGRAM GAME (PURPLE)
+========================== */
+.venn-container {
+    position: relative;
+    width: 400px;
+    height: 250px;
+    margin: 20px auto;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+#circleA { background-color: #8e44ad; left:0; top:30px; }
+#circleB { background-color: #9b59b6; right:0; top:30px; }
+
+/* ==========================
+   TRUE / FALSE GAME (YELLOW)
+========================== */
+.tf-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 5px;
+    color: white;
+    background-color: #ffc107;
+}
+
+.tf-btn:hover {
+    background-color: #e0a800;
+}
+
+/* ==========================
+   CARDINALITY GAME (ORANGE)
+========================== */
+.set-elements {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.set-elements .element {
+    width: 40px;
+    height: 40px;
+    background-color: #ff9800;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* ==========================
+   UNION / INTERSECTION GAME (RED)
+========================== */
+.sets-display span {
+    background-color: #e53935;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+.choices .choice-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background-color: #b71c1c;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.choices .choice-btn:hover {
+    background-color: #7f0000;
+}

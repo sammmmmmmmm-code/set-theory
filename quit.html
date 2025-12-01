@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quit Game</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 20; 
+  left: 0; top: 0;
+  width: 100%; height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #1c1c1c;
+  margin: 15% auto; 
+  padding: 20px; 
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  color: white;
+}
+
+.modal-content h2 { margin-bottom: 15px; }
+
+.modal-btn {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-btn-yes { background-color: #ff4fa7; color: white; }
+.modal-btn-yes:hover { background-color: #ff77be; }
+
+.modal-btn-no { background-color: #ccc; color: black; }
+.modal-btn-no:hover { background-color: #aaa; }
+</style>
+</head>
+<body>
+
+<nav>
+  <h1>Game System</h1>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="instructions.html">Instructions</a></li>
+    <li><a href="modes.html">Modes</a></li>
+    <li><a href="quit.html" class="active">Quit</a></li>
+  </ul>
+</nav>
+
+<div class="game-container">
+  <h1>Quit Game</h1>
+  <p>Do you want to exit the game?</p>
+  <div class="btn-container">
+    <button class="btn btn-pink" id="quitBtn">Quit</button>
+    <button class="btn btn-outline" onclick="location.href='index.html'">Back to Home</button>
+  </div>
+</div>
+
+<div id="quitModal" class="modal">
+  <div class="modal-content">
+    <h2>Are you sure you want to quit?</h2>
+    <button class="modal-btn modal-btn-yes" id="confirmQuit">Yes, Quit</button>
+    <button class="modal-btn modal-btn-no" id="cancelQuit">No, Cancel</button>
+  </div>
+</div>
+
+<script>
+const quitBtn = document.getElementById("quitBtn");
+const modal = document.getElementById("quitModal");
+const confirmQuit = document.getElementById("confirmQuit");
+const cancelQuit = document.getElementById("cancelQuit");
+
+quitBtn.onclick = () => modal.style.display = "block";
+cancelQuit.onclick = () => modal.style.display = "none";
+
+confirmQuit.onclick = () => {
+    // Attempt to close the window
+    window.open('', '_self');
+    window.close();
+};
+
+window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; }
+</script>
+
+</body>
+</html>

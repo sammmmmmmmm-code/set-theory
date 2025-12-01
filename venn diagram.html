@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venn Diagram Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Venn Diagram Game</h1>
+<div class="game-container">
+  <div class="score-timer">
+    <div>Score: <span id="score">0</span></div>
+    <div>Time: <span id="timer">60</span>s</div>
+  </div>
+  <div class="venn-container">
+    <div class="circle" id="circleA" ondragover="event.preventDefault()" ondrop="drop(event,'A')">A</div>
+    <div class="circle" id="circleB" ondragover="event.preventDefault()" ondrop="drop(event,'B')">B</div>
+  </div>
+  <div id="elementsContainer"></div>
+  <div class="feedback" id="feedback"></div>
+  <button onclick="location.href='modes.html'" class="btn">Back to Modes</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+const vennElements = [
+  {name:"1", set:"A"},
+  {name:"2", set:"B"},
+  {name:"3", set:"AB"},
+  {name:"4", set:"A"},
+  {name:"5", set:"B"}
+];
+const elContainer = document.getElementById("elementsContainer");
+const feedbackVenn = document.getElementById("feedback");
+const scoreVenn = document.getElementById("score");
+const timerVenn = document.getElementById("timer");
+
+function createVennElements(){
+  elContainer.innerHTML="";
+  vennElements.sort(()=>0.5-Math.random()).forEach((el,idx)=>{
+    const div=document.createElement("div");
+    div.textContent=el.name;
+    div.className="element";
+    div.draggable=true;
+    div.dataset.set=el.set;
+    div.id="el-"+idx;
+    div.addEventListener("dragstart", e=>e.dataTransfer.setData("text", e.target.id));
+    elContainer.appendChild(div);
+  });
+  resetScore(scoreVenn);
+  startTimer(60,timerVenn, ()=>feedbackVenn.textContent="Time's up!");
+  feedbackVenn.textContent="";
+}
+createVennElements();
+</script>
+</body>
+</html>

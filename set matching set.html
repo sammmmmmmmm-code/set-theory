@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Matching Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Set Matching Game</h1>
+<div class="game-container">
+  <div class="score-timer">
+    <div>Score: <span id="score">0</span></div>
+    <div>Time: <span id="timer">60</span>s</div>
+  </div>
+  <div class="set-box">
+    <div class="box" id="setA" ondragover="event.preventDefault()" ondrop="drop(event,'A')">A</div>
+    <div class="box" id="setB" ondragover="event.preventDefault()" ondrop="drop(event,'B')">B</div>
+  </div>
+  <div id="elementsContainer"></div>
+  <div class="feedback" id="feedback"></div>
+  <button onclick="location.href='modes.html'" class="btn">Back to Modes</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+const elementsData = [
+  {name:"1", set:"A"},
+  {name:"2", set:"B"},
+  {name:"3", set:"A"},
+  {name:"4", set:"B"}
+];
+const elementsContainer = document.getElementById("elementsContainer");
+const feedbackEl = document.getElementById("feedback");
+const scoreEl = document.getElementById("score");
+const timerEl = document.getElementById("timer");
+
+function createElements(){
+  elementsContainer.innerHTML = "";
+  elementsData.sort(() => 0.5 - Math.random()).forEach((el, idx)=>{
+    const div = document.createElement("div");
+    div.textContent = el.name;
+    div.className = "element";
+    div.draggable = true;
+    div.dataset.set = el.set;
+    div.id = "el-"+idx;
+    div.addEventListener("dragstart", e=>e.dataTransfer.setData("text", e.target.id));
+    elementsContainer.appendChild(div);
+  });
+  resetScore(scoreEl);
+  startTimer(60, timerEl, ()=>feedbackEl.textContent="Time's up!");
+  feedbackEl.textContent = "";
+}
+function drop(e, boxSet){
+  const id = e.dataTransfer.getData("text");
+  const el = document.getElementById(id);
+  checkSetMatch(el.dataset.set, boxSet, scoreEl, feedbackEl, el, e.target);
+}
+createElements();
+</script>
+</body>
+</html>

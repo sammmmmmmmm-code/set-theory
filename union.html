@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Union / Intersection Puzzle</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Union / Intersection Puzzle</h1>
+<div class="game-container">
+  <div class="score-timer">
+    <div>Score: <span id="score">0</span></div>
+    <div>Time: <span id="timer">30</span>s</div>
+  </div>
+  <div class="sets-display" id="setsDisplay"></div>
+  <div class="choices" id="choices"></div>
+  <div class="feedback" id="feedback"></div>
+  <button onclick="location.href='modes.html'" class="btn">Back to Modes</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+const levels = [
+  {A:[1,2], B:[2,3], type:"union"},
+  {A:[4,5], B:[5,6], type:"intersection"},
+  {A:[7,8,9], B:[8,9,10], type:"union"},
+  {A:[11,12], B:[12,13], type:"intersection"}
+];
+let currentLevel=0;
+const scoreEl=document.getElementById("score");
+const timerEl=document.getElementById("timer");
+const setsDisplay=document.getElementById("setsDisplay");
+const choicesEl=document.getElementById("choices");
+const feedbackEl=document.getElementById("feedback");
+
+function showLevel(){
+  feedbackEl.textContent="";
+  const level=levels[currentLevel];
+  setsDisplay.innerHTML=`A: <span>${level.A.join(",")}</span> B: <span>${level.B.join(",")}</span> Type: <span>${level.type.toUpperCase()}</span>`;
+  choicesEl.innerHTML="";
+
+  const correct = level.type==="union"? Array.from(new Set([...level.A,...level.B])) : level.A.filter(x=>level.B.includes(x));
+  const wrong1 = level.type==="union"? level.A : level.B;
+  const wrong2 = Array.from(new Set([...level.A,...level.B,99]));
+  const options = [correct, wrong1, wrong2].sort(()=>0.5-Math.random());
+
+  options.forEach(opt=>{
+    const btn=document.createElement("button");
+    btn.textContent=`{${opt.join(", ")}}`;
+    btn.className="choice-btn";
+    btn.onclick = ()=>{
+      playClickSound();
+      checkUnionIntersection(opt, correct, scoreEl, feedbackEl);
+      currentLevel++;
+      if(currentLevel<levels.length) setTimeout(showLevel,800);
+      else setTimeout(()=>alert("Game Over! Score: "+score),800);
+    };
+    choicesEl.appendChild(btn);
+  });
+  startTimer(30,timerEl, ()=>feedbackEl.textContent="Time's up!");
+}
+
+resetScore(scoreEl);
+showLevel();
+</script>
+</body>
+</html>
